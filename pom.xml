@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.myhibernate</groupId>
+    <groupId>com.test.hib</groupId>
     <artifactId>HibernateDemo</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0-SNAPSH OT</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -26,6 +26,19 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.33</version>
         </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

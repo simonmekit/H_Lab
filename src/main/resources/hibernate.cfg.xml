@@ -21,5 +21,10 @@
 
         <!--   Mapping entity file -->
         <mapping class="com.test.hib.model.User"/>
+        <mapping class="com.test.hib.model.Employee"/>
+        <mapping class="com.test.hib.model.Teacher"/>
+        <mapping class="com.test.hib.model.Department"/>
+        <mapping class="com.test.hib.model.Address"/>
+        <mapping class="com.test.hib.model.Cohort"/>
     </session-factory>
 </hibernate-configuration>
