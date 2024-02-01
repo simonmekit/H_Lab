@@ -4,6 +4,7 @@ import com.test.hib.model.Address;
 import com.test.hib.model.Cohort;
 import com.test.hib.model.Department;
 import com.test.hib.model.Teacher;
+import jakarta.persistence.NamedQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -11,14 +12,16 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 public class App {
     public static void main(String[] args) {
-    //manyToOne();
+   // manyToOne();
       //  oneToOne();
-       manyToMany();
+       //manyToMany();
        // oneToMany();
+        manyToOneInteractive();
     }
 public static void manyToOne(){
     SessionFactory factory = new Configuration().configure().buildSessionFactory();
@@ -34,6 +37,9 @@ public static void manyToOne(){
     Teacher t2 = new Teacher("2220","Shahparan",dept1);
     Teacher t3 = new Teacher("3000","James",dept1);
     Teacher t4 = new Teacher("40000","Joseph",dept2);
+    t1.setDepartment(dept1);
+    t2.setDepartment(dept1);
+    t3.setDepartment(dept2);
     //Storing Departments in database
      session.persist(dept1);
      session.persist(dept2);
@@ -141,6 +147,78 @@ public static void manyToOne(){
         session.persist(t3);
         t.commit();
     }
+
+    public static void manyToOneInteractive(){
+        System.out.print("Welcome to  manyToOneInteractive!!");
+        SessionFactory factory = new Configuration().configure().buildSessionFactory();
+        Session session = factory.openSession();
+        Transaction transaction = session.beginTransaction();
+        ArrayList<Department> depsArray = new ArrayList<Department>();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.println("Welcome to  manyToOneInteractive!!");
+        System.out.print("Enter the number of departments to Add: ");
+        int numDep = scanner.nextInt();
+        for (int i = 0; i < numDep; i++) {
+            System.out.print("Enter Dept Name: ");
+            String depName = scanner.next();
+            Department dep = new Department(depName);
+            depsArray.add(dep);
+        }
+        for (int i = 0; i < depsArray.size(); i++) {
+            session.persist(depsArray.get(i));
+        }
+        transaction.commit();
+
+
+        try{
+        transaction = session.beginTransaction();
+        System.out.println("==============================================");
+        System.out.println("==============================================");
+        System.out.print("Enter the name of department to delete: ");
+        Department department = new Department(scanner.next());
+
+        String query = "Delete from Department d where d.deptName = :name";
+        int del = session.createQuery(query).setParameter("name", department).executeUpdate();
+            System.out.println("Department deleted: " + del);
+
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+
+
+
+        try{
+            transaction = session.beginTransaction();
+            System.out.println("==============================================");
+            System.out.println("==============================================");
+            System.out.print("Enter the name of department to update: ");
+            Department department = new Department(scanner.next());
+            System.out.println("Enter new name: ");
+            String newName = scanner.next();
+
+            String query = "update Department d set d.deptName = :newName where d.deptName = :name";
+            int del = session.createQuery(query).setParameter("newName", newName)
+                    .setParameter("name", department)
+                    .executeUpdate();
+            System.out.println("Department updated: " + del);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+
+
+    }
+
+
 
 }
 

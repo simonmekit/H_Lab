@@ -18,6 +18,10 @@ public class Teacher implements Serializable {
     private String teacherName;
 
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_dept")
+    private Department department;
+
      @OneToOne(cascade = CascadeType.ALL)
      private Address address;
 
@@ -50,6 +54,7 @@ public class Teacher implements Serializable {
     public Teacher(String salary, String teacherName, Department department) {
         this.salary = salary;
         this.teacherName = teacherName;
+        this.department = department;
     }
 
     public Teacher(String salary, String teacherName) {
@@ -74,5 +79,11 @@ public class Teacher implements Serializable {
     }
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;    }
+    public Department getDepartment(){
+        return department;
+    }
+    public void setDepartment(Department department){
+        this.department = department;
+    }
 }
 

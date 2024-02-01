@@ -1,5 +1,6 @@
 package com.test.hib.controller;
 
+import com.test.hib.model.Teacher;
 import com.test.hib.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,7 +22,7 @@ public class UserController {
          //updateUser(session,3);
 
        // deleteUser(session,4);
-        //findUserHql(factory, session);
+       // findUserHql(factory, session);
 
         //getRecords(session);
 
@@ -29,7 +30,7 @@ public class UserController {
 
         getMaxSalaryGroupBy(session);
 
-        //namedQueryExample(session);
+      //  namedQueryExample(session);
     }
 
 
@@ -118,7 +119,7 @@ public class UserController {
         factory.close();
     }
 
-    public static void findUserHql(SessionFactory factory,Session session) {
+    public static void findUserHql(SessionFactory factory, Session session) {
         String hqlFrom = "FROM User"; // Example of HQL to get all records of user class
         String hqlSelect = "SELECT u FROM User u";
         TypedQuery<User> query = session.createQuery(hqlFrom, User.class);
@@ -181,22 +182,27 @@ public class UserController {
             System.out.printf("%-16s%s%n",a[0],a[1]);
         }
 
-//        String hqlCount = "SELECT COUNT(*) FROM User U";
-//        List<Object> results = s.createQuery(hqlCount,Object.class).getResultList();
-//        System.out.println("Count:"+results);
+//        String hqlCount = "select count(*) FROM Teacher T";
+//        List<Object> results2 = s.createQuery(hqlCount,Object.class).getResultList();
+//        System.out.println("Count:" + results2);
 
     }
 
 
     public static void namedQueryExample(Session session) {
-        String hql = "FROM User u WHERE u.id = :id";
-        TypedQuery<User> query = session.createQuery(hql, User.class);
+        String hql = "FROM Teacher T WHERE T.id = :id";
+        TypedQuery<Teacher> query = session.createQuery(hql, Teacher.class);
         query.setParameter("id", 2);
-        List<User> result = query.getResultList();
+        List<Teacher> result = query.getResultList();
 
-        System.out.printf("%s%13s%17s%34s%21s%n", "|User Id", "|Full name", "|Email", "|Password", "|Salary");
-        for (User u : result) {
-            System.out.printf(" %-10d %-20s %-30s %-23s %s %n", u.getId(), u.getFullname(), u.getEmail(), u.getPassword(), u.getSalary());
+//        System.out.printf("%s%13s%17s%34s%21s%n", "|User Id", "|Full name", "|Email", "|Password", "|Salary");
+//        for (User u : result) {
+//            System.out.printf(" %-10d %-20s %-30s %-23s %s %n", u.getId(), u.getFullname(), u.getEmail(), u.getPassword(), u.getSalary());
+//        }
+
+        System.out.printf("%s%13s%17s%n", "|User Id", "|Salary", "|Name");
+        for (Teacher T : result) {
+            System.out.printf(" %-10d %-20s %-30s %n", T.getTeacherId(), T.getSalary(), T.getTeacherName());
         }
     }
 
